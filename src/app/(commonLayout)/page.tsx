@@ -1,8 +1,15 @@
+import FeaturedEvents from "@/src/components/modules/Home/FeaturedEvents"
+import Hero from "@/src/components/modules/Home/Hero"
+import HowItWorks from "@/src/components/modules/Home/HowItWorks"
 
 const HomePage = () => {
   return (
     <>
-    <h2 className=" text-2xl text-red-500 mt-20">this is home page here</h2>
+    <div className=" w-full">
+      <Hero />
+      <HowItWorks />
+      <FeaturedEvents />
+    </div>
     </>
   )
 }

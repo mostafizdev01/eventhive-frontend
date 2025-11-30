@@ -21,13 +21,13 @@ export const Navbar = () => {
                     {/* Logo */}
                     <Link href="/" className="flex items-center gap-2 group">
                         <div className="relative">
-                            <Hexagon className="w-8 h-8 text-primary fill-primary/20 transition-transform group-hover:scale-110" />
+                            <Hexagon className="w-8 h-8 text-yellow-400 fill-yellow-50 transition-transform group-hover:scale-110" />
                             <div className="absolute inset-0 flex items-center justify-center">
-                                <div className="w-2 h-2 bg-primary rounded-full" />
+                                <div className="w-2 h-2 bg-yellow-400 rounded-full" />
                             </div>
                         </div>
                         <span className="font-poppins font-bold text-xl text-foreground">
-                            Event<span className="text-primary">Hive</span>
+                            Event<span className="text-yellow-400">Hive</span>
                         </span>
                     </Link>
 
@@ -37,10 +37,10 @@ export const Navbar = () => {
                             <Link
                                 key={link.href}
                                 href={link.href}
-                                className="font-inter font-medium text-muted-foreground hover:text-primary transition-colors relative group"
+                                className="font-inter font-medium text-muted-foreground hover:text-yellow-400 transition-colors relative group"
                             >
                                 {link.label}
-                                <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-primary transition-all duration-300 group-hover:w-full" />
+                                <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-yellow-400 transition-all duration-300 group-hover:w-full" />
                             </Link>
                         ))}
                     </div>
