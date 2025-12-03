@@ -15,8 +15,8 @@ const HomePage = () => {
       <Hero />
       <WhyToChooseUs />
       <HowItWorks />
-      <FeaturedEvents />
       <Categories />
+      <FeaturedEvents />
       <TopHosts />
       <Testimonials />
       <FAQ />
