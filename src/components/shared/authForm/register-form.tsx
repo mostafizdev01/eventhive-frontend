@@ -3,17 +3,26 @@
 import { Field, FieldDescription, FieldGroup, FieldLabel } from "../../ui/field";
 import { Input } from "../../ui/input";
 import { Button } from "../../ui/button";
+import Link from "next/link";
+import { useActionState, useEffect } from "react";
+import { createUser } from "@/src/services/auth/createUser";
+import { toast } from "sonner";
 
 const RegisterForm = () => {
-    // const [state, formAction, isPending] = useActionState(registerPatient, null);
+    const [state, formAction, isPending] = useActionState(createUser, null);
 
-    // useEffect(() => {
-    //     if (state && !state.success && state.message) {
-    //         toast.error(state.message);
-    //     }
-    // }, [state]);
+    console.log("state", state)
+
+    useEffect(() => {
+        if (state && !state.success && state.message) {
+            toast.error(state.message);
+        }
+        if (state && state.success && state.message) {
+            toast.success(state.message);
+        }
+    }, [state]);
     return (
-        <form >
+        <form action={formAction}>
             <FieldGroup>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     {/* Name */}
@@ -51,29 +60,18 @@ const RegisterForm = () => {
 
                         {/* <InputFieldError field="password" /> */}
                     </Field>
-                    {/* Confirm Password */}
-                    <Field className="md:col-span-2">
-                        <FieldLabel htmlFor="confirmPassword">Confirm Password</FieldLabel>
-                        <Input
-                            id="confirmPassword"
-                            name="confirmPassword"
-                            type="password"
-                        />
-
-                        {/* <InputFieldError field="confirmPassword" /> */}
-                    </Field>
                 </div>
                 <FieldGroup className="mt-4">
                     <Field>
-                        <Button type="submit">Create Account
-                            {/* {isPending ? "Creating Account..." : "Create Account"} */}
+                        <Button type="submit">
+                            {isPending ? "Creating Account..." : "Create Account"}
                         </Button>
 
                         <FieldDescription className="px-6 text-center">
                             Already have an account?{" "}
-                            <a href="/login" className="text-blue-600 hover:underline">
+                            <Link href="/login" className="text-blue-600 hover:underline">
                                 Sign in
-                            </a>
+                            </Link>
                         </FieldDescription>
                     </Field>
                 </FieldGroup>
