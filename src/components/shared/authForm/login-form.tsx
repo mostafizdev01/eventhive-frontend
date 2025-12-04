@@ -6,12 +6,13 @@ import { Input } from "../../ui/input";
 import { Button } from "../../ui/button";
 import { loginUser } from "@/src/services/auth/loginUser";
 import { toast } from "sonner";
+import InputFieldError from "./InputFieldError";
 const LoginForm = ({ redirect }: { redirect?: string }) => {
     const [state, formAction, isPending] = useActionState(loginUser, null);
-
+            console.log("state", state)
     useEffect(() => {
         if (state && !state.success && state.message) {
-            toast.error(state.message);
+            toast.error("Email does't exist");
         }
         if (state && state.success && state.message) {
             toast.success(state.message);
@@ -31,10 +32,10 @@ const LoginForm = ({ redirect }: { redirect?: string }) => {
                             name="email"
                             type="email"
                             placeholder="m@example.com"
-                        //   required
+                            required
                         />
 
-                        {/* <InputFieldError field="email" state={state} /> */}
+                        <InputFieldError field="email" state={state} />
                     </Field>
 
                     {/* Password */}
@@ -45,9 +46,9 @@ const LoginForm = ({ redirect }: { redirect?: string }) => {
                             name="password"
                             type="password"
                             placeholder="Enter your password"
-                        //   required
+                          required
                         />
-                        {/* <InputFieldError field="password" state={state} /> */}
+                        <InputFieldError field="password" state={state} />
                     </Field>
                 </div>
                 <FieldGroup className="mt-4">

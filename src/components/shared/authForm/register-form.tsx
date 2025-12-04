@@ -11,11 +11,10 @@ import { toast } from "sonner";
 const RegisterForm = () => {
     const [state, formAction, isPending] = useActionState(createUser, null);
 
-    console.log("state", state)
 
     useEffect(() => {
         if (state && !state.success && state.message) {
-            toast.error(state.message);
+            toast.error("Register faild");
         }
         if (state && state.success && state.message) {
             toast.success(state.message);
