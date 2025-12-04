@@ -27,7 +27,7 @@ const RegisterForm = () => {
                     {/* Name */}
                     <Field>
                         <FieldLabel htmlFor="name">Full Name</FieldLabel>
-                        <Input id="name" name="name" type="text" placeholder="John Doe" />
+                        <Input id="name" name="name" type="text" placeholder="John Doe" required />
                         {/* <InputFieldError field="name" /> */}
                     </Field>
                     {/* Address */}
@@ -38,6 +38,7 @@ const RegisterForm = () => {
                             name="address"
                             type="text"
                             placeholder="123 Main St"
+                             required
                         />
                         {/* <InputFieldError field="address" /> */}
                     </Field>
@@ -48,14 +49,14 @@ const RegisterForm = () => {
                             id="email"
                             name="email"
                             type="email"
-                            placeholder="m@example.com"
+                            placeholder="m@example.com" required
                         />
                         {/* <InputFieldError field="email" /> */}
                     </Field>
                     {/* Password */}
                     <Field>
                         <FieldLabel htmlFor="password">Password</FieldLabel>
-                        <Input id="password" name="password" type="password" />
+                        <Input id="password" name="password" type="password" required />
 
                         {/* <InputFieldError field="password" /> */}
                     </Field>
