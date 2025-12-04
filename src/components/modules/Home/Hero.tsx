@@ -39,7 +39,7 @@ export default function Hero() {
                         </p>
 
                         <div className="flex flex-col sm:flex-row gap-4">
-                            <Link href="#explore">
+                            <Link href="/explore">
                                 <Button
                                     size="lg"
                                     className="w-full sm:w-auto bg-primary hover:bg-primary/90 text-primary-foreground font-semibold group"
@@ -48,7 +48,7 @@ export default function Hero() {
                                     <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
                                 </Button>
                             </Link>
-                            <Link href="#become-host">
+                            <Link href="/register">
                                 <Button
                                     size="lg"
                                     variant="outline"

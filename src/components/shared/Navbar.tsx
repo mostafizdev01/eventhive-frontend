@@ -47,12 +47,16 @@ export const Navbar = () => {
 
                     {/* Desktop CTA */}
                     <div className="hidden md:flex items-center gap-3">
-                        <Button variant="ghost" size="sm">
-                            Login
-                        </Button>
-                        <Button size="sm">
-                            Register
-                        </Button>
+                        <Link href={'/login'}>
+                            <Button variant="ghost" size="sm">
+                                Login
+                            </Button>
+                        </Link>
+                        <Link href={"/register"}>
+                            <Button size="sm">
+                                Register
+                            </Button>
+                        </Link>
                     </div>
 
                     {/* Mobile Menu Button */}
