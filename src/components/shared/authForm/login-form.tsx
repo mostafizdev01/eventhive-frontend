@@ -1,21 +1,27 @@
 "use client";
-// import { useActionState, useEffect } from "react";
-// import { toast } from "sonner";
+import { useActionState, useEffect } from "react";
 // import InputFieldError from "./shared/InputFieldError";
 import { Field, FieldDescription, FieldGroup, FieldLabel } from "../../ui/field";
 import { Input } from "../../ui/input";
 import { Button } from "../../ui/button";
+import { loginUser } from "@/src/services/auth/loginUser";
+import { toast } from "sonner";
 const LoginForm = ({ redirect }: { redirect?: string }) => {
-    // const [state, formAction, isPending] = useActionState(loginUser, null);
+    const [state, formAction, isPending] = useActionState(loginUser, null);
 
-    // useEffect(() => {
-    //     if (state && !state.success && state.message) {
-    //         toast.error(state.message);
-    //     }
-    // }, [state]);
+    console.log("state❌", state)
+
+    useEffect(() => {
+        if (state && !state.success && state.message) {
+            toast.error(state.message);
+        }
+        if (state && state.success && state.message) {
+            toast.success(state.message);
+        }
+    }, [state]);
 
     return (
-        <form >
+        <form action={formAction}>
             {redirect && <input type="hidden" name="redirect" value={redirect} />}
             <FieldGroup>
                 <div className="grid grid-cols-1 gap-4">
@@ -48,12 +54,12 @@ const LoginForm = ({ redirect }: { redirect?: string }) => {
                 </div>
                 <FieldGroup className="mt-4">
                     <Field>
-                        <Button type="submit" >
+                        {/* <Button type="submit" >
                             Login
-                        </Button>
-                        {/* <Button type="submit" disabled={isPending}>
-                            {isPending ? "Logging in..." : "Login"}
                         </Button> */}
+                        <Button type="submit" disabled={isPending}>
+                            {isPending ? "Logging in..." : "Login"}
+                        </Button>
 
                         <FieldDescription className="px-6 text-center">
                             Don&apos;t have an account?{" "}
