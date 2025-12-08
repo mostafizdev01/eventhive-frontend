@@ -16,7 +16,6 @@ import {
   Home,
   Plus,
   BarChart3,
-  UserCheck,
   FileText,
 } from "lucide-react";
 import { cn } from "@/src/lib/utils";
@@ -37,13 +36,12 @@ interface NavItem {
 
 
 const adminNav: NavItem[] = [
-  { label: "Overview", href: "/admin", icon: LayoutDashboard },
-  { label: "Users", href: "/admin/users", icon: Users },
-  { label: "Hosts", href: "/admin/hosts", icon: UserCheck },
-  { label: "Events", href: "/admin/events", icon: Calendar },
-  { label: "Payments", href: "/admin/payments", icon: CreditCard },
-  { label: "Reports", href: "/admin/reports", icon: FileText },
-  { label: "Settings", href: "/admin/settings", icon: Settings },
+  { label: "Overview", href: "/admin/dashboard", icon: LayoutDashboard },
+  { label: "Users", href: "/admin/dashboard/user-management", icon: Users },
+  { label: "Events", href: "/admin/dashboard/event-management", icon: Calendar },
+  { label: "Payments", href: "/admin/dashboard/payments", icon: CreditCard },
+  { label: "Reports", href: "/admin/dashboard/reports", icon: FileText },
+  { label: "Settings", href: "/admin/dashboard/settings", icon: Settings },
 ];
 
 const hostNav: NavItem[] = [
@@ -86,7 +84,7 @@ const getRoleLabel = (role: "admin" | "host" | "user") => {
 
 export function DashboardLayout({children}: {children: React.ReactNode}) {
   const [sidebarOpen, setSidebarOpen] = useState(false);
-  const role = "host"
+  const role = "admin"
   const pathname = usePathname();
   const navItems = getNavItems(role);
   const roleInfo = getRoleLabel(role);
