@@ -47,12 +47,12 @@ const adminNav: NavItem[] = [
 ];
 
 const hostNav: NavItem[] = [
-  { label: "Overview", href: "/host", icon: LayoutDashboard },
-  { label: "My Events", href: "/host/events", icon: Calendar },
-  { label: "Create Event", href: "/host/create", icon: Plus },
-  { label: "Attendees", href: "/host/attendees", icon: Users },
-  { label: "Revenue", href: "/host/revenue", icon: BarChart3 },
-  { label: "Settings", href: "/host/settings", icon: Settings },
+  { label: "Overview", href: "/host/dashboard", icon: LayoutDashboard },
+  { label: "My Events", href: "/host/dashboard/my-event", icon: Calendar },
+  { label: "Create Event", href: "/host/dashboard/create-event", icon: Plus },
+  { label: "Attendees", href: "/host/dashboard/attendees", icon: Users },
+  { label: "Revenue", href: "/host/dashboard/revenue", icon: BarChart3 },
+  { label: "Settings", href: "/host/dashboard/settings", icon: Settings },
 ];
 
 const userNav: NavItem[] = [
@@ -86,7 +86,7 @@ const getRoleLabel = (role: "admin" | "host" | "user") => {
 
 export function DashboardLayout({children}: {children: React.ReactNode}) {
   const [sidebarOpen, setSidebarOpen] = useState(false);
-  const role = "user"
+  const role = "host"
   const pathname = usePathname();
   const navItems = getNavItems(role);
   const roleInfo = getRoleLabel(role);
