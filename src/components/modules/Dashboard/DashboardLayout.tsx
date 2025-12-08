@@ -85,14 +85,14 @@ const getRoleLabel = (role: "admin" | "host" | "user") => {
   }
 };
 
-export function DashboardLayout() {
+export function DashboardLayout({children}: {children: React.ReactNode}) {
   const [sidebarOpen, setSidebarOpen] = useState(false);
-  const role = "host"
+  const role = "user"
   const navItems = getNavItems(role);
   const roleInfo = getRoleLabel(role);
 
   return (
-    <div className="bg-muted/30 block">
+    <div className="min-h-screen bg-muted/30">
       {/* Mobile sidebar backdrop */}
       {sidebarOpen && (
         <div
@@ -200,7 +200,7 @@ export function DashboardLayout() {
         </div>
       </aside>
 
-            <div className="lg:pl-64">
+      <div className="lg:pl-64">
         {/* Top navbar */}
         <header className="sticky top-0 z-30 h-16 bg-card/95 backdrop-blur border-b border-border">
           <div className="flex items-center justify-between h-full px-4 lg:px-6">
@@ -238,6 +238,11 @@ export function DashboardLayout() {
             </div>
           </div>
         </header>
+
+        {/* Scrollable children */}
+        <main className=" h-[calc(100vh-64px)] overflow-y-auto p-6">
+          {children}
+        </main>
       </div>
     </div>
   );

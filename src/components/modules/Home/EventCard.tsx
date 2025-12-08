@@ -26,17 +26,17 @@ export default function EventCard({ event }: EventCardProps) {
             {/* Image */}
             <div className="relative h-48 overflow-hidden">
                 <Image
-                    src={event.image}
-                    alt={event.title}
+                    src={event?.image}
+                    alt={event?.title}
                     fill
                     className="object-cover group-hover:scale-110 transition-transform duration-500"
                 />
                 <div className="absolute top-4 right-4">
                     <Badge
-                        variant={event.isPaid ? "default" : "secondary"}
-                        className={event.isPaid ? "bg-accent text-accent-foreground" : "bg-primary text-primary-foreground"}
+                        variant={event?.isPaid ? "default" : "secondary"}
+                        className={event?.isPaid ? "bg-accent text-accent-foreground" : "bg-primary text-primary-foreground"}
                     >
-                        {event.price}
+                        {event?.price}
                     </Badge>
                 </div>
                 <div className="absolute inset-0 bg-linear-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
@@ -46,21 +46,21 @@ export default function EventCard({ event }: EventCardProps) {
             <div className="p-5 space-y-3">
                 <div className="flex items-center gap-2">
                     <Tag className="w-4 h-4 text-primary" />
-                    <span className="text-sm font-medium text-primary">{event.category}</span>
+                    <span className="text-sm font-medium text-primary">{event?.category}</span>
                 </div>
 
                 <h3 className="text-xl font-bold line-clamp-2 group-hover:text-primary transition-colors">
-                    {event.title}
+                    {event?.title}
                 </h3>
 
                 <div className="space-y-2 text-sm text-muted-foreground">
                     <div className="flex items-center gap-2">
                         <Calendar className="w-4 h-4" />
-                        <span>{event.date}</span>
+                        <span>{event?.date}</span>
                     </div>
                     <div className="flex items-center gap-2">
                         <MapPin className="w-4 h-4" />
-                        <span className="line-clamp-1">{event.location}</span>
+                        <span className="line-clamp-1">{event?.location}</span>
                     </div>
                 </div>
 
