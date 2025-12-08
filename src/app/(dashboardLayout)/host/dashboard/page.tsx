@@ -142,7 +142,7 @@ export default function HostDashboard() {
               Welcome back! Here&apos;s an overview of your events.
             </p>
           </div>
-          <Link href="/host/create">
+          <Link href="/host/dashboard/create-event">
             <Button className="btn-primary gap-2">
               <Plus className="h-4 w-4" />
               Create Event

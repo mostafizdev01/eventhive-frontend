@@ -96,7 +96,7 @@ export default function HostEvents() {
             Manage all your created events
           </p>
         </div>
-        <Link href="/host/create">
+        <Link href="/host/dashboard/create-event">
           <Button className="btn-primary gap-2">
             <Plus className="h-4 w-4" />
             Create Event
