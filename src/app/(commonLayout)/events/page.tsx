@@ -191,10 +191,10 @@ export default function EventsPage() {
     };
 
     return (
-        <div className=" w-full bg-background">
+        <div className=" w-full">
             {/* <Navbar userRole="guest" /> */}
 
-            <div className="container mx-auto px-8 pt-24 pb-16">
+            <div className="container mx-auto px-8 pb-16">
                 {/* Page Header */}
                 <EventsHeader
                     searchQuery={searchQuery}

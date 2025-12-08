@@ -15,7 +15,6 @@ import {
   UserCircle,
   Home,
   Plus,
-  Ticket,
   BarChart3,
   UserCheck,
   FileText,
@@ -27,6 +26,7 @@ import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSepara
 import { Avatar, AvatarFallback, AvatarImage } from "../../ui/avatar";
 import { Input } from "../../ui/input";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 interface NavItem {
   label: string;
@@ -58,8 +58,7 @@ const hostNav: NavItem[] = [
 const userNav: NavItem[] = [
   { label: "Overview", href: "/dashboard", icon: LayoutDashboard },
   { label: "Explore", href: "/dashboard/explore", icon: Search },
-  { label: "My Tickets", href: "/dashboard/tickets", icon: Ticket },
-  { label: "My Events", href: "/dashboard/events", icon: Calendar },
+  { label: "My Events", href: "/dashboard/my-event", icon: Calendar },
   { label: "Settings", href: "/dashboard/settings", icon: Settings },
 ];
 
@@ -88,6 +87,7 @@ const getRoleLabel = (role: "admin" | "host" | "user") => {
 export function DashboardLayout({children}: {children: React.ReactNode}) {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const role = "user"
+  const pathname = usePathname();
   const navItems = getNavItems(role);
   const roleInfo = getRoleLabel(role);
 
@@ -138,7 +138,7 @@ export function DashboardLayout({children}: {children: React.ReactNode}) {
           <nav className="flex-1 overflow-y-auto py-4 px-3">
             <ul className="space-y-1">
               {navItems.map((item) => {
-                const isActive = location.pathname === item.href;
+                const isActive = pathname === item.href;
                 return (
                   <li key={item.href}>
                     <Link
