@@ -180,7 +180,7 @@ export function DashboardLayout({children, role, email}: {children: React.ReactN
               <DropdownMenuContent align="end" className="w-56">
                 <DropdownMenuItem>
                   <UserCircle className="mr-2 h-4 w-4" />
-                  Profile
+                  <Link href={"/my-profile/profile"}>Profile</Link>
                 </DropdownMenuItem>
                 <DropdownMenuItem>
                   <Settings className="mr-2 h-4 w-4" />
