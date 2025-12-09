@@ -10,7 +10,7 @@ const navLinks = [
     { label: "Home", href: "/" },
     { label: "Explore Events", href: "/events" },
     { label: "Become a Host", href: "/host" },
-    { label: "Dashboard", href: "/" },
+    { label: "Dashboard", href: "/dashboard" },
 ];
 
 export const Navbar = ({accessToken}: {accessToken: string}) => {
