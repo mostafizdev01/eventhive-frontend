@@ -9,7 +9,7 @@ import { toast } from "sonner";
 import InputFieldError from "./InputFieldError";
 const LoginForm = ({ redirect }: { redirect?: string }) => {
     const [state, formAction, isPending] = useActionState(loginUser, null);
-            console.log("state", state)
+    
     useEffect(() => {
         if (state && !state.success && state.message) {
             toast.error("Email does't exist");

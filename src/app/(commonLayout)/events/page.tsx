@@ -5,6 +5,7 @@ import EventsFilters from "@/src/components/modules/event/EventsFilters";
 import EventsGrid from "@/src/components/modules/event/EventsGrid";
 import EventsHeader from "@/src/components/modules/event/EventsHeader";
 import EventsPagination from "@/src/components/modules/event/EventsPagination";
+import { usePathname } from "next/navigation";
 import { useState } from "react";
 
 // Mock data - replace with actual API data
@@ -138,6 +139,7 @@ const mockEvents = [
 ];
 
 export default function EventsPage() {
+    const pathname = usePathname()
     const [searchQuery, setSearchQuery] = useState("");
     const [selectedCategory, setSelectedCategory] = useState("All");
     const [selectedPrice, setSelectedPrice] = useState("All");
@@ -191,7 +193,7 @@ export default function EventsPage() {
     };
 
     return (
-        <div className=" w-full">
+        <div className={`w-full ${pathname === "/events" ? "mt-24" : ""}`}>
             {/* <Navbar userRole="guest" /> */}
 
             <div className="container mx-auto px-8 pb-16">

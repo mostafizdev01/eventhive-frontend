@@ -4,7 +4,7 @@ import { Menu, X, Hexagon } from "lucide-react";
 import Link from "next/link";
 import { Button } from "../ui/button";
 import { cn } from "@/src/lib/utils";
-import { getCookie } from "@/src/services/auth/tokenHandlers";
+import LogoutButton from "./authForm/LogoutButton";
 
 const navLinks = [
     { label: "Home", href: "/" },
@@ -13,10 +13,8 @@ const navLinks = [
     { label: "Dashboard", href: "/" },
 ];
 
-export const Navbar = () => {
+export const Navbar = ({accessToken}: {accessToken: string}) => {
     const [isOpen, setIsOpen] = useState(false);
-
-    const accessToken = false;
 
     return (
         <nav className="fixed top-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-lg border-b border-border">
@@ -52,11 +50,7 @@ export const Navbar = () => {
                     {/* Desktop CTA */}
                     <div className="hidden md:flex items-center gap-3">
                         {accessToken ?
-                            <Link href={'/login'}>
-                                <Button variant="destructive" size="sm">
-                                    Logout
-                                </Button>
-                            </Link>
+                            <LogoutButton />
                             :
                             <div className=" md:flex gap-2">
                                 <Link href={'/login'}>

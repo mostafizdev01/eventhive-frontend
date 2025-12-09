@@ -6,6 +6,8 @@ import { serverFetch } from "@/src/lib/server-fetch";
 import {parse} from "cookie"
 import { setCookie } from "./tokenHandlers";
 import jwt, { JwtPayload } from "jsonwebtoken";
+import { getDefaultDashboardRoute, UserRole } from "@/src/lib/auth-utils";
+import { redirect } from "next/navigation";
 // import { UserRole } from "@/src/lib/auth-utils";
 
 
@@ -84,13 +86,12 @@ export const loginUser = async (_currentState: any, formData: any): Promise<any>
             throw new Error("Invalid token");
         }
 
-        // const userRole: UserRole = verifiedToken.role;
+        const userRole: UserRole = verifiedToken.role;
 
         if (!result.success) {
             throw new Error(result.message || "Login failed");
         }
 
-        return result
 
         // if (redirectTo && result.data.needPasswordChange) {
         //     const requestedPath = redirectTo.toString();
@@ -106,6 +107,9 @@ export const loginUser = async (_currentState: any, formData: any): Promise<any>
         // }
 
 
+        if(userRole){
+            redirect(getDefaultDashboardRoute(userRole))
+        }
 
         // if (redirectTo) {
         //     const requestedPath = redirectTo.toString();

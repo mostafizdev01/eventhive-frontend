@@ -6,7 +6,6 @@ import {
   Calendar,
   CreditCard,
   Settings,
-  LogOut,
   Menu,
   X,
   ChevronDown,
@@ -26,6 +25,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "../../ui/avatar";
 import { Input } from "../../ui/input";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import LogoutButton from "../../shared/authForm/LogoutButton";
 
 interface NavItem {
   label: string;
@@ -60,34 +60,33 @@ const userNav: NavItem[] = [
   { label: "Settings", href: "/dashboard/settings", icon: Settings },
 ];
 
-const getNavItems = (role: "admin" | "host" | "user") => {
+const getNavItems = (role: "ADMIN" | "HOST" | "USER") => {
   switch (role) {
-    case "admin":
+    case "ADMIN":
       return adminNav;
-    case "host":
+    case "HOST":
       return hostNav;
-    case "user":
+    case "USER":
       return userNav;
   }
 };
 
-const getRoleLabel = (role: "admin" | "host" | "user") => {
+const getRoleLabel = (role: "ADMIN" | "HOST" | "USER") => {
   switch (role) {
-    case "admin":
+    case "ADMIN":
       return { label: "Admin", color: "bg-destructive" };
-    case "host":
+    case "HOST":
       return { label: "Host", color: "bg-primary" };
-    case "user":
+    case "USER":
       return { label: "Attendee", color: "bg-accent" };
   }
 };
 
-export function DashboardLayout({children}: {children: React.ReactNode}) {
+export function DashboardLayout({children, role, email}: {children: React.ReactNode, role:string, email: string}) {
   const [sidebarOpen, setSidebarOpen] = useState(false);
-  const role = "admin"
   const pathname = usePathname();
-  const navItems = getNavItems(role);
-  const roleInfo = getRoleLabel(role);
+  const navItems = getNavItems(role as "ADMIN" | "HOST" | "USER");
+  const roleInfo = getRoleLabel(role as "ADMIN" | "HOST" | "USER");
 
   return (
     <div className="min-h-screen bg-muted/30">
@@ -127,20 +126,20 @@ export function DashboardLayout({children}: {children: React.ReactNode}) {
 
           {/* Role Badge */}
           <div className="px-4 py-3 border-b border-border">
-            <Badge className={cn("text-xs font-medium", roleInfo.color)}>
-              {roleInfo.label} Dashboard
+            <Badge className={cn("text-xs font-medium", roleInfo?.color)}>
+              {roleInfo?.label} Dashboard
             </Badge>
           </div>
 
           {/* Navigation */}
           <nav className="flex-1 overflow-y-auto py-4 px-3">
             <ul className="space-y-1">
-              {navItems.map((item) => {
+              {navItems?.map((item) => {
                 const isActive = pathname === item.href;
                 return (
-                  <li key={item.href}>
+                  <li key={item?.href}>
                     <Link
-                      href={item.href}
+                      href={item?.href}
                       className={cn(
                         "flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors",
                         isActive
@@ -173,7 +172,7 @@ export function DashboardLayout({children}: {children: React.ReactNode}) {
                   </Avatar>
                   <div className="flex-1 text-left">
                     <p className="text-sm font-medium">John Doe</p>
-                    <p className="text-xs text-muted-foreground">john@example.com</p>
+                    <p className="text-xs text-muted-foreground">{email ? email : "john@example.com"}</p>
                   </div>
                   <ChevronDown className="h-4 w-4 text-muted-foreground" />
                 </button>
@@ -188,9 +187,8 @@ export function DashboardLayout({children}: {children: React.ReactNode}) {
                   Settings
                 </DropdownMenuItem>
                 <DropdownMenuSeparator />
-                <DropdownMenuItem className="text-destructive">
-                  <LogOut className="mr-2 h-4 w-4" />
-                  Sign out
+                <DropdownMenuItem>
+                 <LogoutButton />
                 </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
