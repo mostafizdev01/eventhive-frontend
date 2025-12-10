@@ -67,7 +67,7 @@ export default function HowItWorks() {
                 </div>
 
                 {/* Image Container */}
-                <div className="relative w-full aspect-square mb-6 rounded-2xl overflow-hidden bg-muted/50">
+                <div className="relative w-full h-40 aspect-square mb-6 rounded-2xl overflow-hidden bg-muted/50">
                   <Image
                     src={step.image}
                     alt={step.title}

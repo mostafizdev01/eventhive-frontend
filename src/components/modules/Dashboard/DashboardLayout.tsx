@@ -82,7 +82,7 @@ const getRoleLabel = (role: "ADMIN" | "HOST" | "USER") => {
   }
 };
 
-export function DashboardLayout({children, role, email}: {children: React.ReactNode, role:string, email: string}) {
+export function DashboardLayout({children, role, email, name, profilePhoto}: {children: React.ReactNode, role:string, email: string, name: string, profilePhoto: string}) {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const pathname = usePathname();
   const navItems = getNavItems(role as "ADMIN" | "HOST" | "USER");
@@ -108,7 +108,7 @@ export function DashboardLayout({children, role, email}: {children: React.ReactN
         <div className="flex flex-col h-full">
           {/* Logo */}
           <div className="flex items-center justify-between h-16 px-4 border-b border-border">
-            <Link href="/" className="flex items-center gap-2">
+            <Link href="/dashboard" className="flex items-center gap-2">
               <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
                 <span className="text-primary-foreground font-bold text-sm">E</span>
               </div>
@@ -167,11 +167,11 @@ export function DashboardLayout({children, role, email}: {children: React.ReactN
               <DropdownMenuTrigger asChild>
                 <button className="flex items-center gap-3 w-full p-2 rounded-lg hover:bg-muted transition-colors">
                   <Avatar className="h-9 w-9">
-                    <AvatarImage src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=100" />
-                    <AvatarFallback>JD</AvatarFallback>
+                    <AvatarImage src={profilePhoto ? profilePhoto : "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=100"} />
+                    <AvatarFallback>{name? name : "Jhon Deo"}</AvatarFallback>
                   </Avatar>
                   <div className="flex-1 text-left">
-                    <p className="text-sm font-medium">John Doe</p>
+                    <p className="text-sm font-medium">{name ? name : "Jhon Deo"}</p>
                     <p className="text-xs text-muted-foreground">{email ? email : "john@example.com"}</p>
                   </div>
                   <ChevronDown className="h-4 w-4 text-muted-foreground" />
