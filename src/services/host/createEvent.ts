@@ -2,7 +2,8 @@
 "use server";
 
 import { serverFetch } from "@/src/lib/server-fetch";
-
+import { getCookie } from "../auth/tokenHandlers";
+import jwt from "jsonwebtoken"
 interface FormState {
     success: boolean;
     message: string;
@@ -14,6 +15,9 @@ export const createEventAction = async (
     formData: FormData
 ): Promise<FormState> => {
     try {
+        const accessToken = await getCookie("accessToken")
+        const decoded: any = jwt.decode(accessToken as string);
+
         const jsonData = formData.get("data") as string;
         const parsed = JSON.parse(jsonData);
 
@@ -21,32 +25,35 @@ export const createEventAction = async (
             title: formData.get("title") as string,
             description: formData.get("description") as string,
             location: formData.get("location") as string,
-            eventDate: parsed.eventDate,
+            eventDate: new Date(parsed.eventDate).toISOString(),
             startTime: formData.get("startTime") as string,
             endTime: formData.get("endTime") as string,
-            ticketPrice: Number(formData.get("ticketPrice")),
-            totalSeats: Number(formData.get("totalSeats")),
-            availableSeats: Number(formData.get("availableSeats")),
+            ticketPrice: formData.get("ticketPrice"),
+            totalSeats: formData.get("totalSeats"),
+            availableSeats: formData.get("availableSeats"),
             category: parsed.category,
             status: parsed.status,
-            hostId: "cmiucy7050001tsut5tnmba5g",
+            hostId: decoded?.host?.id,
         };
+
+
 
         const newForm = new FormData();
 
         newForm.append("data", JSON.stringify(payload));
 
-        if(formData?.get("file")){
+        if (formData?.get("file")) {
             newForm.append("file", formData.get("file") as Blob);
         }
 
+        // console.log("payload:", payload)
+        // console.log("decoded:", decoded)
 
         const res = await serverFetch.post("/event/create-event", {
             body: newForm,
         });
 
         const result = await res.json();
-        console.log("result", result)
 
         if (!result.success) {
             return {
@@ -55,6 +62,7 @@ export const createEventAction = async (
                 errors: result.errors || {},
             };
         }
+
 
         return {
             success: true,

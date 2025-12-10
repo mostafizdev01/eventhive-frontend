@@ -1,4 +1,4 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
+
 import CreateEventForm from "@/src/components/modules/Dashboard/host/create-event-form";
 import {
   Card,
@@ -7,12 +7,12 @@ import {
   CardHeader,
   CardTitle,
 } from "@/src/components/ui/card";
-import { getCookie } from "@/src/services/auth/tokenHandlers";
-import jwt from "jsonwebtoken"
+// import { getCookie } from "@/src/services/auth/tokenHandlers";
+// import jwt from "jsonwebtoken"
 
 const CreateEventPage = async () => {
-  const accessToken = await getCookie("accessToken")
-  const decoded: any = jwt.decode(accessToken as string);
+  // const accessToken = await getCookie("accessToken")
+  // const decoded: any = jwt.decode(accessToken as string);
   // console.log("accessToken: ", decoded);
   
   return (

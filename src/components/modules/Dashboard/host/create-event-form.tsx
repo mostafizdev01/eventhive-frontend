@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/set-state-in-effect */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
@@ -25,6 +26,7 @@ import {
 import Image from "next/image";
 import { createEventAction } from "@/src/services/host/createEvent";
 import { toast } from "sonner";
+import { useRouter } from "next/navigation";
 
 const EVENT_CATEGORIES = [
     { value: "music", label: "Music" },
@@ -41,6 +43,7 @@ const EVENT_STATUS = [
 ] as const;
 
 export default function CreateEventForm() {
+    const router = useRouter();
     const [state, formAction, isPending] = useActionState(createEventAction, {
         success: false,
         message: "",
@@ -51,6 +54,22 @@ export default function CreateEventForm() {
     const [imagePreview, setImagePreview] = useState<string | null>(null);
     const [category, setCategory] = useState("");
     const [status, setStatus] = useState("OPEN");
+
+    useEffect(() => {
+        if (state && state.success) {
+            toast.success(state?.message)
+            setImagePreview(null)
+            setTimeout(() => {
+                router.push("/host/dashboard/my-event")
+            }, 1000)
+        }
+
+        if (state && !state.success && state?.message.length > 0) {
+            toast.error(state?.message)
+            setImagePreview(null)
+        }
+
+    }, [state, router])
 
     const fileInputRef = useRef<HTMLInputElement>(null);
 
