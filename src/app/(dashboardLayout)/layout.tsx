@@ -2,9 +2,9 @@ import { DashboardLayout } from "@/src/components/modules/Dashboard/DashboardLay
 import { UserRole } from "@/src/lib/auth-utils";
 import { deleteCookie, getCookie } from "@/src/services/auth/tokenHandlers";
 import jwt, { JwtPayload } from "jsonwebtoken";
-import { NextRequest, NextResponse } from "next/server";
+import { redirect } from "next/navigation";
 
-const Layout = async ({ children }: { children: React.ReactNode }, request: NextRequest) => {
+const Layout = async ({ children }: { children: React.ReactNode }) => {
 
   const accessToken = await getCookie("accessToken") || null;
 
@@ -19,7 +19,7 @@ const Layout = async ({ children }: { children: React.ReactNode }, request: Next
     if (typeof verifiedToken === "string") {
       await deleteCookie("accessToken");
       await deleteCookie("refreshToken");
-      return NextResponse.redirect(new URL('/login', request.url));
+      redirect("/login")
     }
     userRole = verifiedToken.role;
     userEmail = verifiedToken?.email
