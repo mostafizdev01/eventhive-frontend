@@ -128,7 +128,7 @@ Stripe Checkout & client-side confirmation
 Payment status updates inside dashboard
 
 🎥 Project Explanation Video
-
+https://drive.google.com/file/d/1NFhptcuZjuFfy6_pyOwJR-1-PcVrIvvx/view?usp=sharing
 
 
 👨‍💻 Author
