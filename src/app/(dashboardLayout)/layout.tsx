@@ -10,8 +10,6 @@ const Layout = async ({ children }: { children: React.ReactNode }) => {
 
   let userRole: UserRole | null = null;
   let userEmail 
-  let name 
-  let profilePhoto 
 
   if (accessToken) {
     const verifiedToken: JwtPayload | string = jwt.verify(accessToken, process.env.JWT_SECRET as string);
@@ -23,13 +21,11 @@ const Layout = async ({ children }: { children: React.ReactNode }) => {
     }
     userRole = verifiedToken.role;
     userEmail = verifiedToken?.email
-    name = verifiedToken?.name
-    profilePhoto = verifiedToken?.profilePhoto
   }
 
   return (
     <>
-      <DashboardLayout role={userRole ?? "USER"} email={userEmail ?? "john@example.com"} name={name ?? "John Doe"} profilePhoto={profilePhoto ?? "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=100"}>
+      <DashboardLayout role={userRole ?? "USER"} email={userEmail ?? "john@example.com"}>
         {children}
       </DashboardLayout>
     </>

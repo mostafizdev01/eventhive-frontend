@@ -82,7 +82,7 @@ const getRoleLabel = (role: "ADMIN" | "HOST" | "USER") => {
   }
 };
 
-export function DashboardLayout({children, role, email, name, profilePhoto}: {children: React.ReactNode, role:string, email: string, name: string, profilePhoto: string}) {
+export function DashboardLayout({children, role, email}: {children: React.ReactNode, role:string, email: string}) {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const pathname = usePathname();
   const navItems = getNavItems(role as "ADMIN" | "HOST" | "USER");
@@ -167,11 +167,11 @@ export function DashboardLayout({children, role, email, name, profilePhoto}: {ch
               <DropdownMenuTrigger asChild>
                 <button className="flex items-center gap-3 w-full p-2 rounded-lg hover:bg-muted transition-colors">
                   <Avatar className="h-9 w-9">
-                    <AvatarImage src={profilePhoto ? profilePhoto : "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=100"} />
-                    <AvatarFallback>{name? name : "Jhon Deo"}</AvatarFallback>
+                    <AvatarImage src={"https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=100"} />
+                    <AvatarFallback>{"Jhon Deo"}</AvatarFallback>
                   </Avatar>
                   <div className="flex-1 text-left">
-                    <p className="text-sm font-medium">{name ? name : "Jhon Deo"}</p>
+                    <p className="text-sm font-medium">{"Jhon Deo"}</p>
                     <p className="text-xs text-muted-foreground">{email ? email : "john@example.com"}</p>
                   </div>
                   <ChevronDown className="h-4 w-4 text-muted-foreground" />

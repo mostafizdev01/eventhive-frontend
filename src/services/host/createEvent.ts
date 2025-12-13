@@ -4,6 +4,7 @@
 import { serverFetch } from "@/src/lib/server-fetch";
 import { getCookie } from "../auth/tokenHandlers";
 import jwt from "jsonwebtoken"
+import { getUserInfo } from "../auth/getUserInfo";
 interface FormState {
     success: boolean;
     message: string;
@@ -17,6 +18,7 @@ export const createEventAction = async (
     try {
         const accessToken = await getCookie("accessToken")
         const decoded: any = jwt.decode(accessToken as string);
+        const userInfo = await getUserInfo(decoded?.email);
 
         const jsonData = formData.get("data") as string;
         const parsed = JSON.parse(jsonData);
@@ -33,10 +35,8 @@ export const createEventAction = async (
             availableSeats: formData.get("availableSeats"),
             category: parsed.category,
             status: parsed.status,
-            hostId: decoded?.host?.id,
+            hostId: userInfo?.data?.host?.id,
         };
-
-
 
         const newForm = new FormData();
 
@@ -46,8 +46,6 @@ export const createEventAction = async (
             newForm.append("file", formData.get("file") as Blob);
         }
 
-        // console.log("payload:", payload)
-        // console.log("decoded:", decoded)
 
         const res = await serverFetch.post("/event/create-event", {
             body: newForm,

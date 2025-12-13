@@ -1,5 +1,4 @@
-
-
+"use client"
 import { DataTable, Column } from "@/src/components/modules/Dashboard/host/DataTable";
 import { RevenueChart } from "@/src/components/modules/Dashboard/host/RevenueChart";
 import { StatsCard } from "@/src/components/modules/Dashboard/user/StatsCard";

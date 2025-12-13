@@ -1,90 +1,117 @@
+
 "use client"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/src/components/ui/tabs";
 import { Input } from "@/src/components/ui/input";
 import { Badge } from "@/src/components/ui/badge";
 import { Plus, Search, Grid, List } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import { Button } from "@/src/components/ui/button";
 import { EventCard } from "@/src/components/modules/Dashboard/user/EventCard";
+import { hostEvent } from "@/src/services/host/myEvent";
 
-const events = [
-  {
-    id: "1",
-    title: "Tech Summit 2024",
-    image: "https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=400",
-    date: "Dec 15, 2024",
-    location: "San Francisco, CA",
-    category: "Tech",
-    price: 50,
-    attendees: 450,
-    capacity: 500,
-    status: "active" as const,
-  },
-  {
-    id: "2",
-    title: "Startup Workshop",
-    image: "https://images.unsplash.com/photo-1515187029135-18ee286d815b?w=400",
-    date: "Dec 18, 2024",
-    location: "Palo Alto, CA",
-    category: "Business",
-    price: 35,
-    attendees: 28,
-    capacity: 30,
-    status: "active" as const,
-  },
-  {
-    id: "3",
-    title: "AI Conference",
-    image: "https://images.unsplash.com/photo-1485827404703-89b55fcc595e?w=400",
-    date: "Dec 22, 2024",
-    location: "San Jose, CA",
-    category: "Tech",
-    price: 75,
-    attendees: 120,
-    capacity: 200,
-    status: "upcoming" as const,
-  },
-  {
-    id: "4",
-    title: "Networking Mixer",
-    image: "https://images.unsplash.com/photo-1511795409834-ef04bbd61622?w=400",
-    date: "Dec 28, 2024",
-    location: "Oakland, CA",
-    category: "Networking",
-    price: "Free" as const,
-    attendees: 45,
-    capacity: 100,
-    status: "upcoming" as const,
-  },
-  {
-    id: "5",
-    title: "Product Launch Event",
-    image: "https://images.unsplash.com/photo-1505373877841-8d25f7d46678?w=400",
-    date: "Jan 5, 2025",
-    location: "San Francisco, CA",
-    category: "Business",
-    price: 0,
-    attendees: 0,
-    capacity: 150,
-    status: "draft" as const,
-  },
-  {
-    id: "6",
-    title: "Design Thinking Workshop",
-    image: "https://images.unsplash.com/photo-1552664730-d307ca884978?w=400",
-    date: "Nov 20, 2024",
-    location: "Berkeley, CA",
-    category: "Design",
-    price: 40,
-    attendees: 25,
-    capacity: 25,
-    status: "cancelled" as const,
-  },
-];
+export interface HostEvent {
+  id: string;
+  title: string;
+  bannerImage: string;
+  eventDate: string;
+  location: string;
+  category: string;
+  price: number | "Free";
+  availableSeats: number;
+  totalSeats: number;
+  status?: "OPEN" | "CLOSE" | "CANCELLED"
+  onJoin?: () => void;
+  onEdit?: () => void;
+  onView?: () => void;
+  variant?: "default" | "compact";
+}
+
+// const events = [
+//   {
+//     id: "1",
+//     title: "Tech Summit 2024",
+//     image: "https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=400",
+//     date: "Dec 15, 2024",
+//     location: "San Francisco, CA",
+//     category: "Tech",
+//     price: 50,
+//     attendees: 450,
+//     capacity: 500,
+//     status: "active" as const,
+//   },
+//   {
+//     id: "2",
+//     title: "Startup Workshop",
+//     image: "https://images.unsplash.com/photo-1515187029135-18ee286d815b?w=400",
+//     date: "Dec 18, 2024",
+//     location: "Palo Alto, CA",
+//     category: "Business",
+//     price: 35,
+//     attendees: 28,
+//     capacity: 30,
+//     status: "active" as const,
+//   },
+//   {
+//     id: "3",
+//     title: "AI Conference",
+//     image: "https://images.unsplash.com/photo-1485827404703-89b55fcc595e?w=400",
+//     date: "Dec 22, 2024",
+//     location: "San Jose, CA",
+//     category: "Tech",
+//     price: 75,
+//     attendees: 120,
+//     capacity: 200,
+//     status: "upcoming" as const,
+//   },
+//   {
+//     id: "4",
+//     title: "Networking Mixer",
+//     image: "https://images.unsplash.com/photo-1511795409834-ef04bbd61622?w=400",
+//     date: "Dec 28, 2024",
+//     location: "Oakland, CA",
+//     category: "Networking",
+//     price: "Free" as const,
+//     attendees: 45,
+//     capacity: 100,
+//     status: "upcoming" as const,
+//   },
+//   {
+//     id: "5",
+//     title: "Product Launch Event",
+//     image: "https://images.unsplash.com/photo-1505373877841-8d25f7d46678?w=400",
+//     date: "Jan 5, 2025",
+//     location: "San Francisco, CA",
+//     category: "Business",
+//     price: 0,
+//     attendees: 0,
+//     capacity: 150,
+//     status: "draft" as const,
+//   },
+//   {
+//     id: "6",
+//     title: "Design Thinking Workshop",
+//     image: "https://images.unsplash.com/photo-1552664730-d307ca884978?w=400",
+//     date: "Nov 20, 2024",
+//     location: "Berkeley, CA",
+//     category: "Design",
+//     price: 40,
+//     attendees: 25,
+//     capacity: 25,
+//     status: "cancelled" as const,
+//   },
+// ];
 
 export default function HostEvents() {
   const [view, setView] = useState<"grid" | "list">("grid");
+  const [events, setEvents] = useState<HostEvent[]>([])
+  console.log("events", events)
+  useEffect(() => {
+    const fetchEvent = async () => {
+      setEvents(await hostEvent());
+    }
+    fetchEvent()
+  }, [])
 
   return (
     <div className="space-y-6">
@@ -147,7 +174,7 @@ export default function HostEvents() {
           <div className={view === "grid" ? "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4" : "space-y-4"}>
             {events.map((event) => (
               <EventCard
-                key={event.id}
+                key={event?.id}
                 {...event}
                 variant={view === "list" ? "compact" : "default"}
                 onEdit={() => console.log("Edit", event)}
@@ -157,11 +184,11 @@ export default function HostEvents() {
           </div>
         </TabsContent>
 
-        <TabsContent value="active">
+        {/* <TabsContent value="active">
           <div className={view === "grid" ? "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4" : "space-y-4"}>
-            {events.filter(e => e.status === "active").map((event) => (
+            {events.filter(e => e.status === "OPEN").map((event) => (
               <EventCard
-                key={event.id}
+                key={event}
                 {...event}
                 variant={view === "list" ? "compact" : "default"}
                 onEdit={() => console.log("Edit", event)}
@@ -169,13 +196,13 @@ export default function HostEvents() {
               />
             ))}
           </div>
-        </TabsContent>
+        </TabsContent> */}
 
-        <TabsContent value="upcoming">
+        {/* <TabsContent value="upcoming">
           <div className={view === "grid" ? "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4" : "space-y-4"}>
-            {events.filter(e => e.status === "upcoming").map((event) => (
+            {events.filter(e => e.status === "OPEN").map((event) => (
               <EventCard
-                key={event.id}
+                key={event}
                 {...event}
                 variant={view === "list" ? "compact" : "default"}
                 onEdit={() => console.log("Edit", event)}
@@ -183,8 +210,8 @@ export default function HostEvents() {
               />
             ))}
           </div>
-        </TabsContent>
-
+        </TabsContent> */}
+        {/* 
         <TabsContent value="draft">
           <div className={view === "grid" ? "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4" : "space-y-4"}>
             {events.filter(e => e.status === "draft").map((event) => (
@@ -197,13 +224,13 @@ export default function HostEvents() {
               />
             ))}
           </div>
-        </TabsContent>
+        </TabsContent> */}
 
-        <TabsContent value="cancelled">
+        {/* <TabsContent value="cancelled">
           <div className={view === "grid" ? "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4" : "space-y-4"}>
-            {events.filter(e => e.status === "cancelled").map((event) => (
+            {events.filter(e => e.status === "CANCELLED").map((event) => (
               <EventCard
-                key={event.id}
+                key={event}
                 {...event}
                 variant={view === "list" ? "compact" : "default"}
                 onEdit={() => console.log("Edit", event)}
@@ -211,7 +238,7 @@ export default function HostEvents() {
               />
             ))}
           </div>
-        </TabsContent>
+        </TabsContent> */}
       </Tabs>
     </div>
   );

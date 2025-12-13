@@ -7,14 +7,14 @@ import Image from "next/image";
 interface EventCardProps {
     id: string;
     title: string;
-    image: string;
-    date: string;
+    bannerImage: string;
+    eventDate: string;
     location: string;
     category: string;
     price: number | "Free";
-    attendees: number;
-    capacity: number;
-    status?: "active" | "upcoming" | "draft" | "cancelled";
+    availableSeats: number;
+    totalSeats: number;
+    status?: "OPEN" | "CLOSE" | "CANCELLED"
     onJoin?: () => void;
     onEdit?: () => void;
     onView?: () => void;
@@ -22,29 +22,28 @@ interface EventCardProps {
 }
 
 const statusColors = {
-    active: "bg-green-500/10 text-green-600 border-green-500/20",
-    upcoming: "bg-accent/10 text-accent border-accent/20",
-    draft: "bg-muted text-muted-foreground border-border",
-    cancelled: "bg-destructive/10 text-destructive border-destructive/20",
+    OPEN: "bg-green-500/10 text-green-600 border-green-500/20",
+    CLOSE: "bg-muted text-muted-foreground border-border",
+    CANCELLED: "bg-destructive/10 text-destructive border-destructive/20",
 };
 
 export function EventCard({
     title,
-    image,
-    date,
+    bannerImage,
+    eventDate,
     location,
     category,
     price,
-    attendees,
-    capacity,
-    status = "active",
+    availableSeats,
+    totalSeats,
+    status = "OPEN",
     onJoin,
     onEdit,
     onView,
     variant = "default",
 }: EventCardProps) {
-    const isSoldOut = attendees >= capacity;
-    const spotsLeft = capacity - attendees;
+    const isSoldOut = availableSeats >= totalSeats;
+    const spotsLeft = totalSeats - availableSeats;
 
     if (variant === "compact") {
         return (
@@ -52,7 +51,7 @@ export function EventCard({
                 <Image
                 width={500}
                 height={500}
-                    src={image}
+                    src={bannerImage}
                     alt={title}
                     className="w-16 h-16 rounded-lg object-cover"
                 />
@@ -61,7 +60,7 @@ export function EventCard({
                     <div className="flex items-center gap-3 mt-1 text-sm text-muted-foreground">
                         <span className="flex items-center gap-1">
                             <Calendar className="h-3.5 w-3.5" />
-                            {date}
+                            {eventDate}
                         </span>
                         <span className="flex items-center gap-1">
                             <MapPin className="h-3.5 w-3.5" />
@@ -76,13 +75,14 @@ export function EventCard({
         );
     }
 
+    const formatedDate = eventDate ? new Date(eventDate).toISOString()?.split("T")[0] : ""
     return (
         <div className="bg-card rounded-xl border border-border overflow-hidden hover:shadow-card-hover transition-all group">
             <div className="relative h-40 overflow-hidden">
                 <Image
                     width={500}
                     height={500}
-                    src={image}
+                    src={bannerImage}
                     alt={title}
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                 />
@@ -107,7 +107,7 @@ export function EventCard({
                 <div className="flex flex-col gap-2 mt-3 text-sm text-muted-foreground">
                     <div className="flex items-center gap-2">
                         <Calendar className="h-4 w-4 text-primary" />
-                        <span>{date}</span>
+                        <span>{formatedDate}</span>
                     </div>
                     <div className="flex items-center gap-2">
                         <MapPin className="h-4 w-4 text-primary" />
@@ -116,7 +116,7 @@ export function EventCard({
                     <div className="flex items-center gap-2">
                         <Users className="h-4 w-4 text-primary" />
                         <span>
-                            {attendees}/{capacity} attendees
+                            {availableSeats}/{totalSeats} attendees
                             {!isSoldOut && spotsLeft <= 10 && (
                                 <span className="text-destructive ml-1">({spotsLeft} left!)</span>
                             )}
