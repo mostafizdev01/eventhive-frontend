@@ -4,7 +4,7 @@ import { cn } from "@/src/lib/utils";
 import { Calendar, MapPin, Users } from "lucide-react";
 import Image from "next/image";
 
-interface EventCardProps {
+export interface EventCardProps {
     id: string;
     title: string;
     bannerImage: string;

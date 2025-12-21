@@ -10,6 +10,7 @@ export const hostEvent = async () => {
     const decoded: any = jwt.decode(token);
     const hostData = await getUserInfo(decoded?.email)
     const hostId = hostData?.data?.host?.id;
+    // console.log("hostId", hostId)
     try {
         const res = await serverFetch.post("/event/my-event", {
             headers: {

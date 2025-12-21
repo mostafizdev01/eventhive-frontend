@@ -9,6 +9,7 @@ import Link from "next/link";
 import { Button } from "@/src/components/ui/button";
 import { EventCard } from "@/src/components/modules/Dashboard/user/EventCard";
 import { hostEvent } from "@/src/services/host/myEvent";
+import { EventCardSkeleton } from "./skeleton";
 
 export interface HostEvent {
   id: string;
@@ -105,7 +106,7 @@ export interface HostEvent {
 export default function HostEvents() {
   const [view, setView] = useState<"grid" | "list">("grid");
   const [events, setEvents] = useState<HostEvent[]>([])
-  console.log("events", events)
+  // console.log("events", events)
   useEffect(() => {
     const fetchEvent = async () => {
       setEvents(await hostEvent());
@@ -172,15 +173,22 @@ export default function HostEvents() {
 
         <TabsContent value="all">
           <div className={view === "grid" ? "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4" : "space-y-4"}>
-            {events.map((event) => (
-              <EventCard
-                key={event?.id}
-                {...event}
-                variant={view === "list" ? "compact" : "default"}
-                onEdit={() => console.log("Edit", event)}
-                onView={() => console.log("View", event)}
-              />
-            ))}
+            {
+              !events || events.length === 0 ?
+                (
+                  Array.from({ length: 6 }).map((_, i) =>
+                    <EventCardSkeleton key={i} />
+                  ))
+                :
+                (events?.map((event) => (
+                  <EventCard
+                    key={event?.id}
+                    {...event}
+                    variant={view === "list" ? "compact" : "default"}
+                    onEdit={() => console.log("Edit", event)}
+                    onView={() => console.log("View", event)}
+                  />
+                )))}
           </div>
         </TabsContent>
 
