@@ -71,7 +71,7 @@ export const Categories = () => {
                     {categories.map((category) => (
                         <Link
                             key={category.name}
-                            href={`/explore?category=${category.name.toLowerCase()}`}
+                            href={`/events`}
                             className="group relative bg-card p-6 rounded-2xl shadow-card card-hover text-center overflow-hidden"
                         >
                             {/* Gradient Hover Effect */}

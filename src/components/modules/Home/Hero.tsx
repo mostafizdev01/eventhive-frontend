@@ -39,7 +39,7 @@ export default function Hero() {
                         </p>
 
                         <div className="flex flex-col sm:flex-row gap-4">
-                            <Link href="/explore">
+                            <Link href="/events">
                                 <Button
                                     size="lg"
                                     className="w-full sm:w-auto bg-primary hover:bg-primary/90 text-primary-foreground font-semibold group"

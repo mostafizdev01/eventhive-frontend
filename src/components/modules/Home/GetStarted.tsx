@@ -37,11 +37,11 @@ export default function GetStarted() {
                             </Button>
                         </Link>
 
-                        <Link href="/create-event">
+                        <Link href="/host/dashboard/create-event">
                             <Button
                                 size="lg"
                                 variant="outline"
-                                className="w-full sm:w-auto border-2 border-accent text-accent hover:bg-accent hover:text-accent-foreground font-semibold px-8"
+                                className="w-full sm:w-auto border-2 cursor-pointer border-accent text-accent hover:bg-accent hover:text-accent-foreground font-semibold px-8"
                             >
                                 Create Event
                             </Button>

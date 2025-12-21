@@ -1,6 +1,7 @@
 import Image from "next/image";
 import { Star, Award } from "lucide-react";
 import { Badge } from "../../ui/badge";
+import Link from "next/link";
 
 const topHosts = [
     {
@@ -82,8 +83,8 @@ export default function TopHosts() {
                                     <Star
                                         key={i}
                                         className={`w-4 h-4 ${i < Math.floor(host.rating)
-                                                ? "text-primary fill-primary"
-                                                : "text-muted-foreground/30"
+                                            ? "text-primary fill-primary"
+                                            : "text-muted-foreground/30"
                                             }`}
                                     />
                                 ))}
@@ -102,9 +103,11 @@ export default function TopHosts() {
                     <p className="text-lg text-muted-foreground mb-4">
                         Ready to become a host and create your own events?
                     </p>
-                    <button className="px-8 py-3 bg-primary hover:bg-primary/90 text-primary-foreground font-semibold rounded-xl transition-colors">
-                        Start Hosting Today
-                    </button>
+                    <Link href={"/dashboard"}>
+                        <button className="px-8 py-3 cursor-pointer bg-primary hover:bg-primary/90 text-primary-foreground font-semibold rounded-xl transition-colors">
+                            Start Hosting Today
+                        </button>
+                    </Link>
                 </div>
             </div>
         </section>

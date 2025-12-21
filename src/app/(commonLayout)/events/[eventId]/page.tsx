@@ -1,9 +1,12 @@
 "use client"
 import { Button } from "@/src/components/ui/button";
 import { Separator } from "@/src/components/ui/separator";
+import { getSingleEvent } from "@/src/services/event/getSingleEvent";
+import { Event } from "@/src/types/types";
 import { Badge, Calendar, CheckCircle, ChevronLeft, Clock, Heart, Info, MapPin, Share2, Star, Ticket, Users } from "lucide-react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
 
 type Props = { params: { eventId: string } };
 
@@ -47,9 +50,30 @@ const eventData = {
   tags: ["Music", "Festival", "Outdoor", "Live Performance"],
 }
 
+export interface ApiResponse<T> {
+  success: boolean;
+  message: string;
+  data: T;
+}
+
 const EventDetailsPage =  ({ params }: Props) => {
   const { eventId } = params;
   const router = useRouter()
+  const [singleEventData, setSingleEventData] = useState<Event | null>(null);
+  console.log("singleEventData ✅", eventId)
+
+useEffect(() => {
+  const fetchEvent = async () => {
+    const result = await getSingleEvent()
+    if(!result.success){
+      return {}
+    }
+    setSingleEventData(result?.data)
+  }
+
+  fetchEvent()
+}, [])
+
   return (
         <div className="min-h-screen bg-background">
       {/* <Navbar userRole="guest" /> */}
@@ -58,8 +82,8 @@ const EventDetailsPage =  ({ params }: Props) => {
         {/* Hero Image */}
         <div className="relative h-[400px] md:h-[500px] w-full">
           <Image
-            src={eventData.image}
-            alt={eventData.title}
+            src={singleEventData?.bannerImage ? singleEventData?.bannerImage : eventData.image}
+            alt={singleEventData?.title ? singleEventData?.title :eventData.title}
             fill
             className="object-cover"
             priority
@@ -107,7 +131,7 @@ const EventDetailsPage =  ({ params }: Props) => {
                 {eventData.category}
               </Badge>
               <h1 className="text-3xl md:text-5xl font-bold text-white mb-2">
-                {eventData.title}
+                {singleEventData?.title ? singleEventData?.title :eventData.title}
               </h1>
               <div className="flex items-center gap-2 text-white/90">
                 <Users className="w-4 h-4" />

@@ -4,6 +4,8 @@ import Image from "next/image";
 import { Calendar, MapPin, Tag, ArrowRight } from "lucide-react";
 import { Button } from "../../ui/button";
 import { Badge } from "../../ui/badge";
+import { useState } from "react";
+import { useRouter } from "next/navigation";
 
 export interface Event {
     id: string;
@@ -21,6 +23,17 @@ interface EventCardProps {
 }
 
 export default function EventCard({ event }: EventCardProps) {
+    const [handleLoader, setHandleLoader] = useState(false)
+    const router = useRouter();
+
+    const handlejoin = ()=> {
+        setHandleLoader(true)
+        setTimeout(() => {
+            router.push("/login")
+            setHandleLoader(false)
+        }, 2000);
+    }
+
     return (
         <div className="group bg-card rounded-2xl overflow-hidden border border-border hover:shadow-2xl hover:-translate-y-2 transition-all duration-300">
             {/* Image */}
@@ -64,8 +77,9 @@ export default function EventCard({ event }: EventCardProps) {
                     </div>
                 </div>
 
-                <Button className="w-full bg-primary hover:bg-primary/90 text-primary-foreground group/btn">
-                    Join Event
+                <Button disabled={handleLoader} onClick={handlejoin} className="w-full cursor-pointer bg-primary hover:bg-primary/90 text-primary-foreground group/btn">
+                    {handleLoader ? "Joining..." : "Join Event"}
+                    
                     <ArrowRight className="w-4 h-4 ml-2 group-hover/btn:translate-x-1 transition-transform" />
                 </Button>
             </div>

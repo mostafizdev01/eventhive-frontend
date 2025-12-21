@@ -6,6 +6,8 @@ import { Button } from "../../ui/button";
 import { Badge } from "../../ui/badge";
 import { Avatar, AvatarFallback, AvatarImage } from "../../ui/avatar";
 import Link from "next/link";
+import { useState } from "react";
+import { useRouter } from "next/navigation";
 
 interface Event {
     id: string;
@@ -33,6 +35,16 @@ export default function EventsGrid({
     bookmarkedEvents,
     toggleBookmark,
 }: EventsGridProps) {
+
+    const [eventLoadingId, setEventLoadingId] = useState("")
+    const router = useRouter();
+
+    const handleJoin = (id: string) => {
+        setEventLoadingId(id)
+        setTimeout(() => {
+            router.push("/login")
+        }, 2000);
+    }
     return (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 mb-12">
             {events.map((event) => {
@@ -122,8 +134,8 @@ export default function EventsGrid({
                             </div>
 
                             <div className=" md:flex gap-3">
-                                <Button className="w-full flex-1 cursor-pointer bg-accent hover:bg-accent/90 text-accent-foreground group/btn mt-2">
-                                    Join Events
+                                <Button onClick={() => handleJoin(event?.id)} disabled={eventLoadingId === event?.id} className="w-full flex-1 cursor-pointer bg-accent hover:bg-accent/90 text-accent-foreground group/btn mt-2">
+                                    {eventLoadingId === event?.id ? "Joining..." : "Join Event"}
                                     <ArrowRight className="w-4 h-4 ml-2 group-hover/btn:translate-x-1 transition-transform" />
                                 </Button>
                                 <Link className=" w-full flex-1" href={`/events/${event?.id}`}>

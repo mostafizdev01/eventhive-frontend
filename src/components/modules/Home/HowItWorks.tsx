@@ -1,5 +1,6 @@
 import { Search, Calendar, Users, Star } from "lucide-react";
 import Image from "next/image";
+import Link from "next/link";
 
 const steps = [
   {
@@ -95,9 +96,11 @@ export default function HowItWorks() {
         {/* Additional CTA */}
         <div className="text-center mt-12">
           <p className="text-muted-foreground mb-4">Ready to get started?</p>
-          <button className="px-8 py-3 bg-primary text-primary-foreground rounded-full font-semibold hover:bg-primary/90 transition-all hover:scale-105 shadow-lg hover:shadow-xl">
+          <Link href={"/events"}>
+            <button className="px-8 py-3 cursor-pointer bg-primary text-primary-foreground rounded-full font-semibold hover:bg-primary/90 transition-all hover:scale-105 shadow-lg hover:shadow-xl">
             Explore Events Now
           </button>
+          </Link>
         </div>
       </div>
     </section>
