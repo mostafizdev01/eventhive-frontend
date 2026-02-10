@@ -134,6 +134,6 @@ https://drive.google.com/file/d/1NFhptcuZjuFfy6_pyOwJR-1-PcVrIvvx/view?usp=shari
 👨‍💻 Author
 
 Mostafiz
-GitHub: https://github.com/mostafizdev01/eventhive-frontend
+GitHub: https://github.com/mostafizdev01
 
 ⭐ If you like this project, don’t forget to give a star!
